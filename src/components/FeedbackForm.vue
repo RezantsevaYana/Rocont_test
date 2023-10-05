@@ -1,5 +1,5 @@
 <template>
-  <form class="form">
+  <form class="form" @submit.prevent="sumbitHandler">
     <h1 class="form__title">Стать партнером</h1>
     <p class="form__description">
       Мы с радостью проконсультируем Вас по продукту и предложим подходящий
@@ -75,6 +75,18 @@
 <script>
 export default {
   name: "FeedbackForm",
+  data: () => ({
+    surname: '',
+    name: '',
+    fatherName: '',
+    city: '',
+    tel: '',
+  }),
+  methods: {
+    sumbitHandler() {
+      console.log()
+    }
+  }
 };
 </script>
 
@@ -279,6 +291,7 @@ export default {
     background-color: transparent;
     border: 1px solid #00bcd0;
     border-radius: 5px;
+    font-family: Ubuntu;
     font-weight: 300;
     font-size: 20px;
     font-style: normal;

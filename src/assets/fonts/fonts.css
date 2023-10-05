@@ -1,0 +1,17 @@
+@font-face { 
+    font-family: "Ubuntu";
+    src: url("./Ubuntu/UbuntuLight/ubuntulight.woff") format("woff"),
+    url("./Ubuntu/UbuntuLight/ubuntulight.woff2") format("woff2"),
+    url("./Ubuntu/UbuntuLight/ubuntulight.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 300;
+}
+
+@font-face { 
+    font-family: "Ubuntu";
+    src: url("./Ubuntu/UbuntuRegular/ubuntu.woff") format("woff"),
+    url("./Ubuntu/UbuntuRegular/ubuntu.woff2") format("woff2"),
+    url("./Ubuntu/UbuntuRegular/ubuntu.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 400;
+}

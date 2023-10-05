@@ -21,7 +21,7 @@ export default {
 <style lang="scss">
 body {
   margin: 0;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Ubuntu',Avenir, Helvetica, Arial, sans-serif;
   height: 100vh;
 }
 #app {
