@@ -6,28 +6,28 @@
 </template>
 
 <script>
-import MainImage from './components/MainImage.vue'
-import FeedbackForm from './components/FeedbackForm.vue'
+import MainImage from "./components/MainImage.vue";
+import FeedbackForm from "./components/FeedbackForm.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     MainImage,
-    FeedbackForm
-  }
-}
+    FeedbackForm,
+  },
+};
 </script>
 
 <style lang="scss">
 body {
   margin: 0;
-  font-family: 'Ubuntu',Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Ubuntu", Avenir, Helvetica, Arial, sans-serif;
   height: 100vh;
 }
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #FFFFFF;
+  background: #ffffff;
   width: 100%;
   height: 100%;
   display: flex;
@@ -49,5 +49,4 @@ body {
     height: 100%;
   }
 }
-
 </style>

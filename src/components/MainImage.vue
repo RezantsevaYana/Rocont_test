@@ -1,14 +1,18 @@
 <template>
-  <img src="../assets/main-image.png" alt="фоновая картинка" class="main-iamge">
+  <img
+    src="../assets/main-image.png"
+    alt="фоновая картинка"
+    class="main-iamge"
+  />
 </template>
 
 <script>
 export default {
-  name: 'MainImage',
-}
+  name: "MainImage",
+};
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .main-iamge {
   flex-grow: 1;
   height: 100%;
@@ -17,8 +21,7 @@ export default {
   object-fit: cover;
 
   @media screen and (max-width: 600px) {
-      display: none;
+    display: none;
   }
 }
-
 </style>

@@ -1,106 +1,166 @@
 <template>
-  <form class="form" @submit.prevent="sumbitHandler">
-    <h1 class="form__title">Стать партнером</h1>
-    <p class="form__description">
-      Мы с радостью проконсультируем Вас по продукту и предложим подходящий
-      варинат решения!
-    </p>
-
-    <fieldset class="form__fieldset form__fieldset_inputs">
-      <label class="form__label">
-        Фамилия
-        <input
-          class="form__input"
-          type="text"
-          name="surname"
-          placeholder="Иванов"
-        />
-      </label>
-
-      <label class="form__label">
-        Имя
-        <input class="form__input" type="text" name="name" placeholder="Иван" />
-      </label>
-
-      <label class="form__label">
-        Отчество
-        <input
-          class="form__input"
-          type="text"
-          name="fatherName"
-          placeholder="Иванович"
-        />
-      </label>
-
-      <label class="form__label form__label_city">
-        Город
-        <input
-          class="form__input"
-          type="text"
-          name="city"
-          placeholder="Выберете город"
-        />
-      </label>
-
-      <label class="form__label">
-        Телефон
-        <input
-          class="form__input"
-          type="tel"
-          name="tel"
-          placeholder="Выберете город"
-        />
-      </label>
-    </fieldset>
-
-    <fieldset class="form__fieldset form__fieldset_files">
-      <button class="form__add-files" type="button">
-        Прикрепить документы о мед образовании
-      </button>
-    </fieldset>
-
-    <fieldset class="form__fieldset form__fieldset_checkbox">
-      <input class="form__checkbox" type="checkbox" name="checkbox" checked />
-      <span class="form__checkbox-custom"></span>
-      <p class="form__text">
-        Нажимая кнопку «отправить», вы даете согласие на обработку
-        <a class="form__link" href="#" target="_blank">персональных данных.</a>
+  <div v-if="!formSubmited" class="form__container">
+    <form class="form" @submit.prevent="sumbitHandler">
+      <h1 class="form__title">Стать партнером</h1>
+      <p class="form__description">
+        Мы с радостью проконсультируем Вас по продукту и предложим подходящий
+        варинат решения!
       </p>
-    </fieldset>
 
-    <button class="form__submit" type="submit">Отправить</button>
-  </form>
+      <fieldset class="form__fieldset form__fieldset_inputs">
+        <label class="form__label">
+          Фамилия
+          <input
+            class="form__input"
+            type="text"
+            name="surname"
+            placeholder="Иванов"
+            v-model="surname"
+          />
+        </label>
+
+        <label class="form__label">
+          Имя
+          <input
+            class="form__input"
+            type="text"
+            name="name"
+            placeholder="Иван"
+            v-model="name"
+          />
+        </label>
+
+        <label class="form__label">
+          Отчество
+          <input
+            class="form__input"
+            type="text"
+            name="fatherName"
+            placeholder="Иванович"
+            v-model="fatherName"
+          />
+        </label>
+
+        <label class="form__label form__label_city">
+          Город
+          <input
+            class="form__input"
+            type="text"
+            name="city"
+            placeholder="Выберете город"
+            v-model="city"
+          />
+        </label>
+
+        <label class="form__label">
+          Телефон
+          <input
+            class="form__input"
+            type="tel"
+            name="tel"
+            v-model="tel"
+            placeholder="+7 (XXX) XXX XX - XX"
+          />
+        </label>
+      </fieldset>
+      <span class="error error_phone" v-if="numberErrorMessage.length > 0">{{
+        numberErrorMessage
+      }}</span>
+
+      <fieldset class="form__fieldset form__fieldset_files">
+        <button class="form__add-files" type="button">
+          Прикрепить документы о мед образовании
+        </button>
+      </fieldset>
+
+      <fieldset class="form__fieldset form__fieldset_checkbox">
+        <input
+          class="form__checkbox"
+          type="checkbox"
+          name="checkbox"
+          v-model="isChecked"
+        />
+        <span class="form__checkbox-custom" @click="checkBoxHandler"></span>
+        <p class="form__text">
+          Нажимая кнопку «отправить», вы даете согласие на обработку
+          <a class="form__link" href="#" target="_blank"
+            >персональных данных.</a
+          >
+        </p>
+      </fieldset>
+
+      <span class="error" v-if="errorMessage.length > 0">{{
+        errorMessage
+      }}</span>
+      <button
+        :class="{
+          'form__submit form__submit_disabled': !isFormValidate,
+          form__submit: isFormValidate,
+        }"
+        type="submit"
+      >
+        Отправить
+      </button>
+    </form>
+  </div>
+  <div v-else>
+    <p class="form__submited-title">Заявка отправлена</p>
+  </div>
 </template>
 
 <script>
 export default {
   name: "FeedbackForm",
   data: () => ({
-    surname: '',
-    name: '',
-    fatherName: '',
-    city: '',
-    tel: '',
+    surname: "",
+    name: "",
+    fatherName: "",
+    city: "",
+    tel: "",
+    isChecked: false,
+    errorMessage: "",
+    numberErrorMessage: "",
+    formSubmited: false,
   }),
+  computed: {
+    isFormValidate() {
+      return (
+        this.surname.length !== 0 &&
+        this.name.length !== 0 &&
+        this.fatherName.length !== 0 &&
+        this.tel.length !== 0 &&
+        this.city !== 0 &&
+        this.isChecked
+      );
+    },
+  },
   methods: {
     sumbitHandler() {
-      console.log()
-    }
-  }
+      this.formSubmited = true;
+    },
+    checkBoxHandler() {
+      this.isChecked = !this.isChecked;
+    },
+  },
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .form {
-  flex-grow: 1;
-  width: auto;
-  max-width: 437px;
-  height: 95%;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: space-between;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+
+  &__container {
+    flex-grow: 1;
+    width: auto;
+    max-width: 437px;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
 
   @media screen and (max-width: 1024px) {
     padding: 0 32px;
@@ -245,10 +305,10 @@ export default {
       left: 3px;
       display: none;
     }
+  }
 
-    &__checkbox:checked + &__checkbox-custom::before {
-      display: block;
-    }
+  .form__checkbox:checked + .form__checkbox-custom::before {
+    display: block;
   }
 
   &__link {
@@ -301,12 +361,33 @@ export default {
     cursor: pointer;
 
     &:hover {
+      border: 2px solid #00bcd0;
+    }
+
+    &_disabled {
       opacity: 0.5;
+      pointer-events: none;
     }
 
     @media screen and (max-width: 1024px) {
       width: 100%;
     }
   }
+
+  &__submited-title {
+    text-align: center;
+    font-weight: 300;
+    font-size: 50px;
+    line-height: 66px;
+  }
+}
+
+.error {
+  color: red;
+  font-family: Ubuntu;
+  font-weight: 300;
+  font-size: 15px;
+  font-style: normal;
+  line-height: 24px;
 }
 </style>
