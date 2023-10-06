@@ -99,6 +99,7 @@
             :class="{
               form__input: tel.length === 0,
               'form__input form__input_active': tel.length !== 0,
+              'form__input form__input_error' : numberErrorMessage.length !==0,
             }"
             @input="formatPhone"
             v-imask="mask"
@@ -150,9 +151,6 @@
         </p>
       </fieldset>
 
-      <span class="error" v-if="errorMessage.length > 0">{{
-        errorMessage
-      }}</span>
       <button
         :class="{
           'form__submit form__submit_disabled': !isFormValidate,
@@ -181,7 +179,6 @@ export default {
     city: "",
     tel: "",
     isChecked: false,
-    errorMessage: "",
     numberErrorMessage: "",
     formSubmited: false,
     isSelectListOpen: false,
@@ -438,6 +435,10 @@ export default {
 
     &_active {
       border: 1px solid #00bcd0;
+    }
+
+    &_error {
+      border: 1px solid red;
     }
 
     &_file {
