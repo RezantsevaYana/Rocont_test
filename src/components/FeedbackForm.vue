@@ -16,7 +16,7 @@
             placeholder="Иванов"
             v-model="surname"
             :class="{
-              'form__input': surname.length === 0,
+              form__input: surname.length === 0,
               'form__input form__input_active': surname.length !== 0,
             }"
           />
@@ -31,7 +31,7 @@
             placeholder="Иван"
             v-model="name"
             :class="{
-              'form__input': name.length === 0,
+              form__input: name.length === 0,
               'form__input form__input_active': name.length !== 0,
             }"
           />
@@ -46,7 +46,7 @@
             placeholder="Иванович"
             v-model="fatherName"
             :class="{
-              'form__input': fatherName.length === 0,
+              form__input: fatherName.length === 0,
               'form__input form__input_active': fatherName.length !== 0,
             }"
           />
@@ -61,10 +61,25 @@
             placeholder="Выберете город"
             v-model="city"
             :class="{
-              'form__input': city.length === 0,
+              form__input: city.length === 0,
               'form__input form__input_active': city.length !== 0,
             }"
           />
+          <button
+            type="button"
+            class="form__button-select"
+            @click="toggleSelectList"
+          ></button>
+          <ul
+            :class="{
+              'form__city-list': !isSelectListOpen,
+              'form__city-list form__city-list_open': isSelectListOpen,
+            }"
+          >
+            <li class="form__city" v-for="city in cities" :key="city.id" @click="selectCityHandler(city.name)">
+              {{ city.name }}
+            </li>
+          </ul>
         </label>
 
         <label class="form__label">
@@ -76,7 +91,7 @@
             v-model="tel"
             placeholder="+7 (XXX) XXX XX - XX"
             :class="{
-              'form__input': tel.length === 0,
+              form__input: tel.length === 0,
               'form__input form__input_active': tel.length !== 0,
             }"
           />
@@ -140,6 +155,12 @@ export default {
     errorMessage: "",
     numberErrorMessage: "",
     formSubmited: false,
+    isSelectListOpen: false,
+    cities: [
+      { id: 1, name: "Москва" },
+      { id: 2, name: "Санкт-Петербург" },
+      { id: 3, name: "Екатеринбург" },
+    ],
   }),
   computed: {
     isFormValidate() {
@@ -160,6 +181,13 @@ export default {
     checkBoxHandler() {
       this.isChecked = !this.isChecked;
     },
+    toggleSelectList() {
+      this.isSelectListOpen = !this.isSelectListOpen;
+    },
+    selectCityHandler(city) {
+      this.city = city;
+      this.toggleSelectList();
+    }
   },
 };
 </script>
@@ -290,20 +318,54 @@ export default {
     font-style: normal;
     line-height: 20px;
     position: relative;
+  }
 
-    &_city::after {
-      display: block;
-      content: "";
-      background-image: url(../assets/select.svg);
-      background-repeat: no-repeat;
-      background-size: contain;
-      width: 28px;
-      height: 10px;
-      position: absolute;
-      top: 48px;
-      right: 10px;
-      cursor: pointer;
+  &__button-select {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    background-image: url(../assets/select.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 28px;
+    height: 10px;
+    position: absolute;
+    top: 48px;
+    right: 10px;
+    cursor: pointer;
+  }
+
+  &__city-list {
+    width: auto;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    border: 1px solid #00bcd0;
+    padding: 10px;
+    list-style: none;
+    z-index: 2;
+    background-color: white;
+    display: none;
+    flex-direction: column;
+    gap: 3px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 12px 9px rgba(34, 60, 80, 0.2);
+
+    &_open {
+      display: flex;
     }
+  }
+
+  &__city {
+    width: 100%;
+    color: black;
+    font-family: "Ubuntu";
+    font-weight: 300;
+    font-size: 12px;
+    font-style: normal;
+    line-height: 20px;
+    cursor: pointer;
   }
 
   &__input {
