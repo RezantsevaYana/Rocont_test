@@ -15,3 +15,5 @@ Vue3, Scss
 ### `npm install`
 ### `npm run serve`
 
+## Ссылка на размещенный проект  
+https://RezantsevaYana.github.io/Rocont_test
