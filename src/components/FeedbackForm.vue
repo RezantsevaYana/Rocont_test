@@ -11,11 +11,14 @@
         <label class="form__label">
           Фамилия
           <input
-            class="form__input"
             type="text"
             name="surname"
             placeholder="Иванов"
             v-model="surname"
+            :class="{
+              'form__input': surname.length === 0,
+              'form__input form__input_active': surname.length !== 0,
+            }"
           />
         </label>
 
@@ -27,6 +30,10 @@
             name="name"
             placeholder="Иван"
             v-model="name"
+            :class="{
+              'form__input': name.length === 0,
+              'form__input form__input_active': name.length !== 0,
+            }"
           />
         </label>
 
@@ -38,6 +45,10 @@
             name="fatherName"
             placeholder="Иванович"
             v-model="fatherName"
+            :class="{
+              'form__input': fatherName.length === 0,
+              'form__input form__input_active': fatherName.length !== 0,
+            }"
           />
         </label>
 
@@ -49,6 +60,10 @@
             name="city"
             placeholder="Выберете город"
             v-model="city"
+            :class="{
+              'form__input': city.length === 0,
+              'form__input form__input_active': city.length !== 0,
+            }"
           />
         </label>
 
@@ -60,6 +75,10 @@
             name="tel"
             v-model="tel"
             placeholder="+7 (XXX) XXX XX - XX"
+            :class="{
+              'form__input': tel.length === 0,
+              'form__input form__input_active': tel.length !== 0,
+            }"
           />
         </label>
       </fieldset>
@@ -149,21 +168,39 @@ export default {
 .form {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-between;
+
+  @media screen and (max-width: 1024px) {
+    padding: 0 32px;
+    max-height: 770px;
+  }
+
+  @media screen and (max-width: 600px) {
+    padding-top: 53px;
+    justify-content: start;
+    max-height: 100%;
+  }
 
   &__container {
     flex-grow: 1;
     width: auto;
+    height: 90%;
     max-width: 437px;
-    height: 95%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: space-between;
     box-sizing: border-box;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  @media screen and (max-width: 1024px) {
-    padding: 0 32px;
+    @media screen and (max-width: 1024px) {
+      height: 100%;
+    }
+
+    @media screen and (max-width: 600px) {
+      height: auto;
+    }
   }
 
   &__title {
@@ -194,12 +231,22 @@ export default {
       align-items: start;
       justify-content: space-between;
       height: 57%;
+
+      @media screen and (max-width: 600px) {
+        justify-content: start;
+        height: auto;
+        gap: 24px;
+      }
     }
 
     &_files {
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
+
+      @media screen and (max-width: 600px) {
+        margin: 21px 0 26px;
+      }
     }
 
     &_checkbox {
@@ -218,6 +265,10 @@ export default {
     font-size: 15px;
     font-style: normal;
     line-height: 20px;
+
+    @media screen and (max-width: 600px) {
+      margin: 10px 0 27px;
+    }
   }
 
   &__text {
@@ -261,6 +312,10 @@ export default {
     border-radius: 5px;
     box-sizing: border-box;
     padding: 15px 20px;
+
+    &_active {
+      border: 1px solid #00bcd0;
+    }
 
     &:focus {
       border: 1px solid #00bcd0;
@@ -372,6 +427,10 @@ export default {
     @media screen and (max-width: 1024px) {
       width: 100%;
     }
+
+    @media screen and (max-width: 600px) {
+      margin: 37px 0 0;
+    }
   }
 
   &__submited-title {
@@ -384,10 +443,10 @@ export default {
 
 .error {
   color: red;
-  font-family: Ubuntu;
+  font-family: "Ubuntu";
   font-weight: 300;
-  font-size: 15px;
+  font-size: 12px;
   font-style: normal;
-  line-height: 24px;
+  line-height: 20px;
 }
 </style>

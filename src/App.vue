@@ -33,6 +33,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 600px) {
+      height: auto;
+  }
 }
 .main-container {
   width: auto;
