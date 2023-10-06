@@ -112,9 +112,26 @@
       </fieldset>
 
       <fieldset class="form__fieldset form__fieldset_files">
-        <button class="form__add-files" type="button">
+        <label class="form__add-files" for="fileInput">
           Прикрепить документы о мед образовании
-        </button>
+          <input
+            type="file"
+            @change="upFiles"
+            id="fileInput"
+            class="form__input_file"
+          />
+        </label>
+
+        <ul :class="{
+              'form__files-list': Array.from(files).length === 0,
+              'form__files-list form__files-list_active': Array.from(files).length !== 0,
+            }">
+          <li class="form__file" v-for="file in Array.from(files)" :key="file.index">
+            <button class="form__file-delete" type="button"></button>
+            <p class="form__file-name">{{ file }}</p>
+          </li>
+        </ul>
+
       </fieldset>
 
       <fieldset class="form__fieldset form__fieldset_checkbox">
@@ -171,11 +188,11 @@ export default {
     cities: [
       { id: 1, name: "Москва" },
       { id: 2, name: "Санкт-Петербург" },
-      { id: 3, name: "Екатеринбург" },
     ],
     mask: {
       mask: "+7(000)-000-00-00",
     },
+    files: [],
   }),
   computed: {
     isFormValidate() {
@@ -183,7 +200,7 @@ export default {
         this.surname.length !== 0 &&
         this.name.length !== 0 &&
         this.fatherName.length !== 0 &&
-        this.tel.length === 17 &&
+        this.tel.length >= 17 &&
         this.city !== 0 &&
         this.isChecked
       );
@@ -207,16 +224,21 @@ export default {
       this.toggleSelectList();
     },
     formatPhone() {
-      console.log(this.tel.length)
+      console.log(this.tel.length);
       const hasLetters = /[a-zA-Z]/.test(this.tel);
 
       if (hasLetters) {
-        this.numberErrorMessage = "Телефон введен некорректно";
+        this.numberErrorMessage = "Телефон не должен содержать букв";
       }
 
       if (!hasLetters) {
         this.numberErrorMessage = "";
       }
+    },
+    upFiles(e) {
+      const files = e.target.files;
+      this.files = [...this.files, files[0].name];
+      console.log(Array.from(this.files));
     },
   },
 };
@@ -298,9 +320,10 @@ export default {
     }
 
     &_files {
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+      position: relative;
 
       @media screen and (max-width: 600px) {
         margin: 21px 0 26px;
@@ -366,21 +389,22 @@ export default {
   }
 
   &__city-list {
-    width: auto;
+    width: 100%;
     height: auto;
     position: absolute;
-    top: 50%;
+    top: 50px;
     right: 0;
-    border: 1px solid #00bcd0;
-    padding: 10px;
+    border: 1px solid #ABABAB;
+    border-top: 0;
+    border-radius: 0 0 5px;
+    padding: 20px;
     list-style: none;
     z-index: 2;
     background-color: white;
     display: none;
     flex-direction: column;
-    gap: 3px;
-    border-radius: 5px;
-    box-shadow: 5px 5px 12px 9px rgba(34, 60, 80, 0.2);
+    gap: 12px;
+    box-sizing: border-box;
 
     &_open {
       display: flex;
@@ -392,7 +416,7 @@ export default {
     color: black;
     font-family: "Ubuntu";
     font-weight: 300;
-    font-size: 12px;
+    font-size: 15px;
     font-style: normal;
     line-height: 20px;
     cursor: pointer;
@@ -407,6 +431,13 @@ export default {
 
     &_active {
       border: 1px solid #00bcd0;
+    }
+
+    &_file {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
     }
 
     &:focus {
@@ -480,6 +511,7 @@ export default {
     justify-content: center;
     text-align: start;
     cursor: pointer;
+    position: relative;
 
     &::before {
       content: "";
@@ -530,6 +562,45 @@ export default {
     font-weight: 300;
     font-size: 50px;
     line-height: 66px;
+  }
+
+  &__files-list {
+    list-style: none;
+    padding: 0;
+    display: none;
+    flex-wrap: wrap;
+    gap: 24px;
+
+    &_active {
+      display: flex;
+    }
+  }
+
+  &__file {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  &__file-delete {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    background-image: url(../assets/delete-btn.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 15px;
+    height: 17px;
+    cursor: pointer;
+  }
+
+  &__file-name {
+    font-family: "Ubuntu";
+    font-weight: 300;
+    font-size: 15px;
+    font-style: normal;
+    line-height: 20px;
+    margin: 0;
   }
 }
 
