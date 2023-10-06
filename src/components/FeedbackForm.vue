@@ -183,7 +183,7 @@ export default {
         this.surname.length !== 0 &&
         this.name.length !== 0 &&
         this.fatherName.length !== 0 &&
-        this.tel.length !== 0 &&
+        this.tel.length === 17 &&
         this.city !== 0 &&
         this.isChecked
       );
@@ -207,6 +207,7 @@ export default {
       this.toggleSelectList();
     },
     formatPhone() {
+      console.log(this.tel.length)
       const hasLetters = /[a-zA-Z]/.test(this.tel);
 
       if (hasLetters) {
