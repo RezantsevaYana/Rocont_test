@@ -1,24 +1,17 @@
-# test
+# Форма обратной связи на vue3  
 
-## Project setup
-```
-npm install
-```
+  
+Форма обратной связи написанная на Vue3  
+Настроена валидация полей ввода, добавлена маска на поле ввода номера телефона, есть возможность прикреплять файлы и удалять их.  
+Планируются следующие доработки:  
+1. Отрефакторить код, а именно разбить компонент FeedbackForm на более мелкие компоненты, вынести стили в отдельный файл  
+ 
+## Стек используемых технологий  
+Vue3, Scss  
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Запуск проекта
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### `npm clone`
+### `npm install`
+### `npm run serve`
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
