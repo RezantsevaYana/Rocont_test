@@ -127,7 +127,7 @@
               'form__files-list form__files-list_active': Array.from(files).length !== 0,
             }">
           <li class="form__file" v-for="file in Array.from(files)" :key="file.index">
-            <button class="form__file-delete" type="button"></button>
+            <button class="form__file-delete" type="button" @click="deleteFileHandler(file)"></button>
             <p class="form__file-name">{{ file }}</p>
           </li>
         </ul>
@@ -240,6 +240,10 @@ export default {
       this.files = [...this.files, files[0].name];
       console.log(Array.from(this.files));
     },
+    deleteFileHandler(file) {
+      const newFilesArray = Array.from(this.files).filter((item) => item !== file);
+      this.files = newFilesArray
+    }
   },
 };
 </script>
@@ -324,6 +328,7 @@ export default {
       align-items: start;
       justify-content: start;
       position: relative;
+      cursor: pointer;
 
       @media screen and (max-width: 600px) {
         margin: 21px 0 26px;
@@ -392,7 +397,7 @@ export default {
     width: 100%;
     height: auto;
     position: absolute;
-    top: 50px;
+    top: 60px;
     right: 0;
     border: 1px solid #ABABAB;
     border-top: 0;
@@ -405,6 +410,8 @@ export default {
     flex-direction: column;
     gap: 12px;
     box-sizing: border-box;
+    margin: 0;
+    transition: all 0.3s ease;
 
     &_open {
       display: flex;
@@ -512,6 +519,7 @@ export default {
     text-align: start;
     cursor: pointer;
     position: relative;
+    cursor: pointer;
 
     &::before {
       content: "";
