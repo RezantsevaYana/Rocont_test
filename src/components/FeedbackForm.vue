@@ -64,6 +64,7 @@
               form__input: city.length === 0,
               'form__input form__input_active': city.length !== 0,
             }"
+            :mask="Number"
           />
           <button
             type="button"
@@ -76,7 +77,12 @@
               'form__city-list form__city-list_open': isSelectListOpen,
             }"
           >
-            <li class="form__city" v-for="city in cities" :key="city.id" @click="selectCityHandler(city.name)">
+            <li
+              class="form__city"
+              v-for="city in cities"
+              :key="city.id"
+              @click="selectCityHandler(city.name)"
+            >
               {{ city.name }}
             </li>
           </ul>
@@ -94,12 +100,16 @@
               form__input: tel.length === 0,
               'form__input form__input_active': tel.length !== 0,
             }"
+            @input="formatPhone"
+            v-imask="mask"
           />
+          <span
+            class="error error_phone"
+            v-if="numberErrorMessage.length > 0"
+            >{{ numberErrorMessage }}</span
+          >
         </label>
       </fieldset>
-      <span class="error error_phone" v-if="numberErrorMessage.length > 0">{{
-        numberErrorMessage
-      }}</span>
 
       <fieldset class="form__fieldset form__fieldset_files">
         <button class="form__add-files" type="button">
@@ -143,6 +153,8 @@
 </template>
 
 <script>
+import { IMaskDirective } from "vue-imask";
+
 export default {
   name: "FeedbackForm",
   data: () => ({
@@ -161,6 +173,9 @@ export default {
       { id: 2, name: "Санкт-Петербург" },
       { id: 3, name: "Екатеринбург" },
     ],
+    mask: {
+      mask: "+7(000)-000-00-00",
+    },
   }),
   computed: {
     isFormValidate() {
@@ -173,6 +188,9 @@ export default {
         this.isChecked
       );
     },
+  },
+  directives: {
+    imask: IMaskDirective,
   },
   methods: {
     sumbitHandler() {
@@ -187,7 +205,18 @@ export default {
     selectCityHandler(city) {
       this.city = city;
       this.toggleSelectList();
-    }
+    },
+    formatPhone() {
+      const hasLetters = /[a-zA-Z]/.test(this.tel);
+
+      if (hasLetters) {
+        this.numberErrorMessage = "Телефон введен некорректно";
+      }
+
+      if (!hasLetters) {
+        this.numberErrorMessage = "";
+      }
+    },
   },
 };
 </script>
@@ -510,5 +539,7 @@ export default {
   font-size: 12px;
   font-style: normal;
   line-height: 20px;
+  position: absolute;
+  bottom: -17px;
 }
 </style>
