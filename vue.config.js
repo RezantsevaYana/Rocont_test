@@ -6,6 +6,6 @@ module.exports = defineConfig({
 
 module.exports = {
   publicPath: process.env.NODE_ENV === 'production'
-    ? '/Rocont_test/docs'
+    ? '/Rocont_test/'
     : '/'
 }
